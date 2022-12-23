@@ -12,6 +12,9 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void onButtonClicked(bool checked);
+
 private:
     QPushButton *m_btn;
 };
