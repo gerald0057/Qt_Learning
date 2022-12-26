@@ -1,15 +1,22 @@
 #include "widget.h"
+#include <QApplication>
+#include <QDebug>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
-    setFixedSize(100, 50);
+    setFixedSize(300, 200);
 
-    m_btn = new QPushButton("Hello", this);
-    m_btn->setCheckable(true);
-    m_btn->setGeometry(10, 10, 80, 30);
+    m_btn = new QPushButton(this);
+    m_menu = new QMenu(this);
 
-    connect(m_btn, SIGNAL(clicked(bool)), this, SLOT(onButtonClicked(bool)));
+    m_menu->addAction(QString("Setting"));
+    m_menu->addAction(QString("Version"));
+    m_menu->addAction(QString("About"));
+    m_menu->addAction(QString("Exit"));
+
+    m_btn->setText("Menu");
+    m_btn->setMenu(m_menu);
 }
 
 Widget::~Widget()
@@ -17,15 +24,6 @@ Widget::~Widget()
     delete m_btn;
 }
 
-void Widget::onButtonClicked(bool checked)
+void Widget::onBtnClicked()
 {
-    if (checked)
-    {
-        m_btn->setText("Checked");
-    }
-    else
-    {
-        m_btn->setText("Hello");
-    }
 }
-

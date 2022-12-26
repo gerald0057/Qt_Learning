@@ -2,7 +2,15 @@
 #define WIDGET_H
 
 #include <QWidget>
+//#include <QLCDNumber>
+//#include <QTimer>
+//#include <QDateTime>
+//#include <QToolButton>
+//#include <QAbstractButton>
 #include <QPushButton>
+//#include <QButtonGroup>
+//#include <QVBoxLayout>
+#include <QMenu>
 
 class Widget : public QWidget
 {
@@ -13,9 +21,10 @@ public:
     ~Widget();
 
 private slots:
-    void onButtonClicked(bool checked);
+    void onBtnClicked();
 
 private:
-    QPushButton *m_btn;
+    QPushButton  *m_btn;
+    QMenu *m_menu;
 };
 #endif // WIDGET_H
