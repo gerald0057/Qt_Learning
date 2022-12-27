@@ -1,6 +1,12 @@
 - [Qt Widget-Basic-QPushButton](#qt-widget-basic-qpushbutton)
   - [Main Entry](#main-entry)
-  - [Demonstration](#demonstration)
+  - [生成一个基本的按键](#生成一个基本的按键)
+  - [生成一个基本的按键](#生成一个基本的按键-1)
+  - [给按键加上字符串提示](#给按键加上字符串提示)
+  - [给按键设置字体](#给按键设置字体)
+  - [给按键设置icon](#给按键设置icon)
+  - [给按键设置尺寸](#给按键设置尺寸)
+  - [给按键添加菜单](#给按键添加菜单)
 
 # Qt Widget-Basic-QPushButton
 
@@ -19,20 +25,24 @@ int main(int argc, char *argv[])
 }
 ```
 
-## Demonstration
+## 生成一个基本的按键
 
 ---
 
 > `#include <QPushButton>`
 
-![](.assert/push_button.png) **生成一个基本的按键** 
+![](.assert/push_button.png)
 
 ```cpp
 QPushButton button;
 button.show();
 ```
 
-![](.assert/push_button1.png) **给按键加上字符串内容** 
+## 生成一个基本的按键
+
+---
+
+![](.assert/push_button1.png) 
 
 ```cpp
 QPushButton button;
@@ -44,13 +54,21 @@ QPushButton button("this is a button");
 button.show();
 ```
 
-![](.assert/push_button2.png) **给按键加上字符串提示** 
+## 给按键加上字符串提示
+
+---
+
+![](.assert/push_button2.png)
 
 ```cpp
 button.setToolTip("this is a tool tip");
 ```
 
-![](.assert/push_button3.png) **给按键设置字体** 
+## 给按键设置字体
+
+---
+
+![](.assert/push_button3.png)
 
 > `#include <QFont>`
 
@@ -59,7 +77,11 @@ QFont font("Courier");
 button.setFont(font);
 ```
 
-![](.assert/push_button4.png) **给按键设置icon** 
+## 给按键设置icon
+
+---
+
+![](.assert/push_button4.png)
 
 > `#include <QIcon>`
 
@@ -68,13 +90,21 @@ QIcon icon("icon.png");
 button.setIcon(icon);
 ```
 
-![](.assert/push_button5.png) **给按键设置尺寸** 
+## 给按键设置尺寸
+
+---
+
+![](.assert/push_button5.png)
 
 ```cpp
 button.setFixedSize(500, 200);
 ```
 
-![](.assert/push_button6.png) **给按键添加菜单**
+## 给按键添加菜单
+
+---
+
+![](.assert/push_button6.png)
 
 > widget.cpp
 
@@ -108,6 +138,8 @@ void Widget::onBtnClicked()
 {
 }
 ```
+
+> widget.h
 
 ```cpp
 #ifndef WIDGET_H
