@@ -7,10 +7,11 @@
 //#include <QDateTime>
 //#include <QToolButton>
 //#include <QAbstractButton>
-#include <QPushButton>
+//#include <QPushButton>
 //#include <QButtonGroup>
-//#include <QVBoxLayout>
-#include <QMenu>
+#include <QVBoxLayout>
+//#include <QMenu>
+#include <QCheckBox>
 
 class Widget : public QWidget
 {
@@ -24,7 +25,10 @@ private slots:
     void onBtnClicked();
 
 private:
-    QPushButton  *m_btn;
-    QMenu *m_menu;
+//    QPushButton  *m_btn;
+//    QMenu *m_menu;
+    QCheckBox *m_chkbox, *m_chkbox1, *m_chkbox2;
+
+    QVBoxLayout *m_layout;
 };
 #endif // WIDGET_H
