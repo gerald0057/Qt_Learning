@@ -8,10 +8,12 @@
 //#include <QToolButton>
 //#include <QAbstractButton>
 //#include <QPushButton>
-//#include <QButtonGroup>
-#include <QVBoxLayout>
+#include <QButtonGroup>
+//#include <QVBoxLayout>
+#include <QHBoxLayout>
 //#include <QMenu>
 #include <QCheckBox>
+//#include <QLabel>
 
 class Widget : public QWidget
 {
@@ -22,13 +24,15 @@ public:
     ~Widget();
 
 private slots:
-    void onBtnClicked();
+    void onButtonClicked(QAbstractButton *button);
 
 private:
 //    QPushButton  *m_btn;
 //    QMenu *m_menu;
+    QButtonGroup *m_group;
     QCheckBox *m_chkbox, *m_chkbox1, *m_chkbox2;
+//    QLabel *m_label;
 
-    QVBoxLayout *m_layout;
+    QHBoxLayout *m_layout;
 };
 #endif // WIDGET_H
