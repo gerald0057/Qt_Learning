@@ -2,18 +2,13 @@
 #define WIDGET_H
 
 #include <QWidget>
-//#include <QLCDNumber>
-//#include <QTimer>
-//#include <QDateTime>
-//#include <QToolButton>
-//#include <QAbstractButton>
-//#include <QPushButton>
-#include <QButtonGroup>
-//#include <QVBoxLayout>
-#include <QHBoxLayout>
-//#include <QMenu>
-#include <QCheckBox>
-//#include <QLabel>
+
+#include <QBoxLayout>
+#include <QLineEdit>
+#include <QIntValidator>
+#include <QDoubleValidator>
+#include <QRegExpValidator>
+#include <QRegExp>
 
 class Widget : public QWidget
 {
@@ -24,15 +19,9 @@ public:
     ~Widget();
 
 private slots:
-    void onButtonClicked(QAbstractButton *button);
 
 private:
-//    QPushButton  *m_btn;
-//    QMenu *m_menu;
-    QButtonGroup *m_group;
-    QCheckBox *m_chkbox, *m_chkbox1, *m_chkbox2;
-//    QLabel *m_label;
-
-    QHBoxLayout *m_layout;
+    QLineEdit *m_edit0, *m_edit1, *m_edit2, *m_edit3;
+    QVBoxLayout *m_layout;
 };
 #endif // WIDGET_H
