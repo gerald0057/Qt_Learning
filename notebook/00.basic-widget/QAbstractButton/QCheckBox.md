@@ -5,6 +5,10 @@
 
 ## Basic
 
+构造一个基础的复选框，和一个三态复选框
+
+![](.assert/check_button.png)
+
 > widget.cpp
 
 ```cpp
