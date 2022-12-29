@@ -3,12 +3,15 @@
 
 #include <QWidget>
 
-#include <QBoxLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSize>
+#include <QIcon>
+#include <QMargins>
+#include <QAction>
+#include <QLabel>
 #include <QLineEdit>
-#include <QIntValidator>
-#include <QDoubleValidator>
-#include <QRegExpValidator>
-#include <QRegExp>
+#include <QPushButton>
 
 class Widget : public QWidget
 {
@@ -19,9 +22,14 @@ public:
     ~Widget();
 
 private slots:
+    void onSearch(bool);
+    void onSearch();
 
 private:
-    QLineEdit *m_edit0, *m_edit1, *m_edit2, *m_edit3;
+    QLineEdit *m_edit;
+    QLabel *m_label;
     QVBoxLayout *m_layout;
+    QAction *m_action;
+    QPushButton *m_btn;
 };
 #endif // WIDGET_H
