@@ -1,6 +1,7 @@
 - [Qt Widget-Basic-QLineEdit](#qt-widget-basic-qlineedit)
   - [QLineEdit 的常用回显模式](#qlineedit-的常用回显模式)
   - [实现搜索框](#实现搜索框)
+  - [自定义方式实现搜索框](#自定义方式实现搜索框)
   - [正则匹配输入](#正则匹配输入)
   - [输入掩码](#输入掩码)
 
@@ -164,6 +165,110 @@ private:
     QLabel *m_label;
     QVBoxLayout *m_layout;
     QAction *m_action;
+};
+#endif // WIDGET_H
+```
+
+## 自定义方式实现搜索框
+
+---
+
+通过 `QPushButton` 和 `QHBoxLayout` 实现按钮内置于搜索框，基于按钮实现的功能可实现悬浮提示等功能
+
+![](../QLineEdit/.assert/lineedit6.png) ![](../QLineEdit/.assert/lineedit7.png)
+
+> widget.cpp
+
+```cpp
+#include "widget.h"
+#include <QApplication>
+#include <QDebug>
+
+Widget::Widget(QWidget *parent)
+    : QWidget(parent)
+{
+    setFixedSize(300, 200);
+
+    m_layout = new QVBoxLayout(this);
+    m_label = new QLabel("Your input: ", this);
+
+    m_edit = new QLineEdit(this);
+    m_edit->setPlaceholderText("Google serach");
+
+    m_btn = new QPushButton(this);
+    m_btn->setCursor(Qt::PointingHandCursor);
+    m_btn->setFixedSize(20, 20);
+    m_btn->setToolTip("Search");
+    m_btn->setIcon(QIcon("search.png"));
+    m_btn->setIconSize(QSize(18, 18));
+
+    QMargins margin = m_edit->textMargins();
+    m_edit->setTextMargins(margin.left(), margin.top(), m_btn->width(), margin.bottom());
+
+    QHBoxLayout *hbox = new QHBoxLayout(m_edit);
+    hbox->addStretch();
+    hbox->addWidget(m_btn);
+    hbox->setSpacing(0);
+    hbox->setContentsMargins(0, 0, 0, 0);
+
+    m_layout->addWidget(m_edit);
+    m_layout->addWidget(m_label);
+
+    connect(m_btn, SIGNAL(clicked(bool)), this, SLOT(onSearch(bool)));
+    connect(m_edit, SIGNAL(editingFinished()), this, SLOT(onSearch()));
+}
+
+Widget::~Widget()
+{
+}
+
+void Widget::onSearch(bool checked)
+{
+    m_label->setText(QString("Your input: %1").arg(m_edit->text()));
+}
+
+void Widget::onSearch()
+{
+    m_label->setText(QString("Your input: %1").arg(m_edit->text()));
+}
+```
+
+> widget.h
+
+```cpp
+#ifndef WIDGET_H
+#define WIDGET_H
+
+#include <QWidget>
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSize>
+#include <QIcon>
+#include <QMargins>
+#include <QAction>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+
+class Widget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    Widget(QWidget *parent = nullptr);
+    ~Widget();
+
+private slots:
+    void onSearch(bool);
+    void onSearch();
+
+private:
+    QLineEdit *m_edit;
+    QLabel *m_label;
+    QVBoxLayout *m_layout;
+    QAction *m_action;
+    QPushButton *m_btn;
 };
 #endif // WIDGET_H
 ```
