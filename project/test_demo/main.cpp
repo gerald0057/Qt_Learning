@@ -1,6 +1,9 @@
 //#include "widget.h"
-#include <QProgressBar>
-#include <QHBoxLayout>
+#include <QScrollArea>
+#include <QLabel>
+#include <QPixmap>
+
+#include <QVBoxLayout>
 
 #include <QApplication>
 
@@ -20,18 +23,15 @@ int main(int argc, char *argv[])
 
     QWidget w;
 
-    QProgressBar bar(&w);
-    bar.setMaximum(100);
-    bar.setMinimum(0);
-    bar.setValue(50);
-    bar.setFormat(QString("download :%1%").arg(QString::number(bar.value() * 100 / bar.maximum(), 'f', 1)));
-    bar.setStyleSheet("text-align:right");
+//    w.setFixedSize(100, 100);
 
-    QHBoxLayout layout(&w);
-    layout.addWidget(&bar);
+    QLabel pic(&w);
+    pic.setPixmap(QPixmap("img.png"));
 
-//    QWidget::connect(&box, SIGNAL(valueChanged(int)), &slider, SLOT(setValue(int)));
-//    QWidget::connect(&slider, SIGNAL(valueChanged(int)), &box, SLOT(setValue(int)));
+    QScrollArea area(&w);
+    area.setBackgroundRole(QPalette::Dark);
+    area.setWidget(&pic);
+    area.setFixedSize(100, 100);
 
     w.show();
 
