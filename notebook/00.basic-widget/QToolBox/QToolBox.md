@@ -1,5 +1,6 @@
 - [Qt Widget-Basic-QToolBox](#qt-widget-basic-qtoolbox)
   - [基础功能](#基础功能)
+  - [添加一个页面](#添加一个页面)
 
 # Qt Widget-Basic-QToolBox
 
@@ -30,4 +31,27 @@ QVBoxLayout layout(&w);
 layout.addWidget(&box);
 
 w.show();
+```
+
+## 添加一个页面
+
+---
+
+![](.assert/toolbox3.png)
+
+```cpp
+QWidget page0;
+QVBoxLayout layout0(&page0);
+QProgressBar bar0(&page0);
+QSlider slider0(&page0);
+
+bar0.setRange(0, 100);
+bar0.setValue(50);
+
+slider0.setOrientation(Qt::Horizontal);
+
+layout0.addWidget(&bar0);
+layout0.addWidget(&slider0);
+
+box.addItem(&page0, "page4");
 ```
