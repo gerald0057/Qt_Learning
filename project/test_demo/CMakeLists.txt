@@ -16,6 +16,8 @@ set(PROJECT_SOURCES
         main.cpp
         widget.cpp
         widget.h
+        traymenu.cpp
+        traymenu.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
