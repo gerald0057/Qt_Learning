@@ -1,63 +1,61 @@
 #include "widget.h"
-#include "traymenu.h"
 #include <QApplication>
-#include <QMessageBox>
-#include <QDebug>
-#include <QCloseEvent>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
-    setFixedSize(300, 200);
-    QSystemTrayIcon *pSystemTray = new QSystemTrayIcon(this);
-    TrayMenu *pTrayMenu = new TrayMenu(this);
+    tab = new QTableWidget(3, 4, this);
 
-    pSystemTray->setContextMenu(pTrayMenu);
+    tab->setColumnCount(3);
+    tab->setRowCount(5);
 
-    pSystemTray->setToolTip(QString::fromLocal8Bit("im a systray icon"));
-    pSystemTray->setIcon(QIcon("icon.png"));
+    tab->setFocusPolicy(Qt::NoFocus);
 
-    connect(pTrayMenu, SIGNAL(showWindow()), this, SLOT(showWindow()));
-    connect(pSystemTray , SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(onActivated(QSystemTrayIcon::ActivationReason)));
+    tab->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    tab->setAlternatingRowColors(true);
 
-    pSystemTray->show();
-    pSystemTray->showMessage(QString::fromLocal8Bit("title"), QString::fromLocal8Bit("this is a message"));
-}
+    tab->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-void Widget::closeEvent(QCloseEvent *event)
-{
-    QMessageBox::information(this, tr("Systray"),
-                             tr("The program will keep running in the "
-                                "system tray. To terminate the program, "
-                                "choose <b>Quit</b> in the context menu "
-                                "of the system tray entry."));
-    hide();
-    event->ignore();
-}
+//    tab->horizontalHeader()->setVisible(false);
+//    tab->verticalHeader()->setVisible(false);
 
-void Widget::showWindow()
-{
-    showNormal();
-    raise();
-    activateWindow();
-}
 
-void Widget::onActivated(QSystemTrayIcon::ActivationReason reason)
-{
-    switch(reason)
+    for (int i = 0; i < tab->rowCount(); ++i)
     {
-        case QSystemTrayIcon::Trigger:
-        {
-            showWindow();
-            break;
-        }
-        // 双击
-        case QSystemTrayIcon::DoubleClick:
-        {
-            qDebug() << "DoubleClick";
-            break;
-        }
-        default:
-            break;
+        QComboBox *box = new QComboBox(this);
+        box->addItem("Grade1");
+        box->addItem("Grade2");
+        box->addItem("Grade3");
+        tab->setCellWidget(i, 2, box);
     }
+
+    tab->setSelectionBehavior(QAbstractItemView::SelectRows);
+//    tab->setSelectionBehavior(QAbstractItemView::SelectColumns);
+//    tab->setSelectionBehavior(QAbstractItemView::SelectItems);
+
+    QStringList header{"Name", "Score", "Grade"};
+    tab->setHorizontalHeaderLabels(header);
+
+//    tab->setColumnWidth(1, 50);
+
+    tab->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    tab->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    m_menu = new QMenu(this);
+    m_menu->addAction(new QAction("add", m_menu));
+    m_menu->addAction(new QAction("del", m_menu));
+
+    connect(tab, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onMenuPop(QPoint)));
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(tab);
 }
+
+void Widget::onMenuPop(QPoint pos)
+{
+    QPoint p;
+    p.setX(pos.x());
+    p.setY(pos.y() + m_menu->height() / 2);
+    m_menu->exec(tab->mapToGlobal(p));
+}
+

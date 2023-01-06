@@ -2,7 +2,11 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include <QSystemTrayIcon>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QVBoxLayout>
+#include <QComboBox>
+#include <QMenu>
 
 class Widget : public QWidget
 {
@@ -12,11 +16,13 @@ public:
     Widget(QWidget *parent = nullptr);
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void showWindow();
-    void onActivated(QSystemTrayIcon::ActivationReason reason);
+    void onMenuPop(QPoint pos);
+
+private:
+    QMenu *m_menu;
+    QTableWidget *tab;
 };
 
 #endif
