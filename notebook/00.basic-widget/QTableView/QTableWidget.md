@@ -125,9 +125,103 @@ tab.horizontalHeader()->setStretchLastSection(true);
 
 ## 设置子控件
 
+---
 
+![](.assert/tablewidget13.png)
+
+```cpp
+for (int i = 0; i < tab.rowCount(); ++i)
+{
+    QComboBox *box = new QComboBox(&w);
+    box->addItem("Grade1");
+    box->addItem("Grade2");
+    box->addItem("Grade3");
+    tab.setCellWidget(i, 2, box);
+}
+```
 
 ## 打开右键菜单
 
 ---
 
+![](.assert/tablewidget14.png)
+
+> widget.cpp
+
+```cpp
+#include "widget.h"
+#include <QApplication>
+
+Widget::Widget(QWidget *parent)
+    : QWidget(parent)
+{
+    tab = new QTableWidget(3, 5, this);
+    tab->setAlternatingRowColors(true);
+    tab->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    QStringList header{"Name", "Score", "Grade"};
+    tab->setHorizontalHeaderLabels(header);
+    tab->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    for (int i = 0; i < tab->rowCount(); ++i)
+    {
+        QComboBox *box = new QComboBox(this);
+        box->addItem("Grade1");
+        box->addItem("Grade2");
+        box->addItem("Grade3");
+        tab->setCellWidget(i, 2, box);
+    }
+
+    tab->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    m_menu = new QMenu(this);
+    m_menu->addAction(new QAction("add", m_menu));
+    m_menu->addAction(new QAction("del", m_menu));
+
+    connect(tab, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onMenuPop(QPoint)));
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(tab);
+}
+
+void Widget::onMenuPop(QPoint pos)
+{
+    QPoint p;
+    p.setX(pos.x());
+    p.setY(pos.y() + m_menu->height() / 2);
+    m_menu->exec(tab->mapToGlobal(p));
+}
+```
+
+> widget.h
+
+```cpp
+#ifndef WIDGET_H
+#define WIDGET_H
+
+#include <QWidget>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QVBoxLayout>
+#include <QComboBox>
+#include <QMenu>
+
+class Widget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    Widget(QWidget *parent = nullptr);
+
+protected:
+
+private slots:
+    void onMenuPop(QPoint pos);
+
+private:
+    QMenu *m_menu;
+    QTableWidget *tab;
+};
+
+#endif
+``
